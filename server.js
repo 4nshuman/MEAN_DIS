@@ -19,7 +19,7 @@ app.post('/api/signIn', function (req, res) {
     fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
         data = JSON.parse(data);
         for (keys in data){
-            if(req.body.RacfID == data[keys]['racfID']){
+            if(req.body['racfID'] == data[keys]['racfID'] && req.body['loginpswrd'] == data[keys]['password']){
                 signInResponse = {
                     userID: data[keys]['id'],
                     isValid: true,
