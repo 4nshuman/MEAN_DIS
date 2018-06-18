@@ -15,7 +15,7 @@ export class DISLoginComponent implements OnInit {
 
   clickme(){
     console.log('clicked');
-    //console.log(this.loginService.getDemoData());
+    console.log(this.loginService.getDemoData());
   }
 
 }
