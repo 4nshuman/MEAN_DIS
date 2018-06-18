@@ -1,17 +1,17 @@
 <div class="LoginContainer">
-  <form (ngSubmit)='clickme()'>
+  <form #userLogin = 'ngForm' (ngSubmit)='clickme(userLogin.value)'>
     <div class="form-group">
       <label for="Email">Email address</label>
-      <input type="email" class="form-control" id="EmailID" aria-describedby="emailHelp" placeholder="Enter email">
+      <input type="email" class="form-control" name='loginemail' id="EmailID" aria-describedby="emailHelp" placeholder="Enter email" ngModel>
       <small id="emailHelp" class="form-text text-muted">Log in via workplace ID to upload documents.</small>
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" id="pswrd" placeholder="Password">
+      <input type="password" name='loginpswrd' class="form-control" id="pswrd" placeholder="Password" ngModel>
     </div>
     <div class="form-check">
       <label class="form-check-label">
-        <input type="checkbox" class="form-check-input">
+        <input name='loginremember' type="checkbox" class="form-check-input" ngModel>
         Remember me
       </label>
     </div>

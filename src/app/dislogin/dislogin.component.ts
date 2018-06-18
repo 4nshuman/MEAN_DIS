@@ -7,15 +7,19 @@ import { LoginService } from "../login.service";
   styleUrls: ['./dislogin.component.css']
 })
 export class DISLoginComponent implements OnInit {
-
+  public user;
   constructor(private loginService: LoginService) { }
 
   ngOnInit() {
   }
 
-  clickme(){
+  clickme(data){
     console.log('clicked');
-    console.log(this.loginService.getDemoData());
+    this.loginService.validateUser(data)
+      .subscribe(data => console.log(data));
+    //console.log(this.user);    
+    /* console.log(this.loginService.getDemoData());
+    console.log("form data "+ data.loginremember); */
   }
 
 }
