@@ -12,7 +12,6 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   validateUser(userData): Observable<user[]>{
-    console.log('accessing');
-    return this.http.get<user[]>('http://localhost:8081/api/listUsers');
+    return this.http.post<user[]>('http://localhost:8081/api/signIn',userData);
   }
 }

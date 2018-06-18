@@ -8,13 +8,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-signInResponse = {
-    userID: '-1',
-    isValid: 'false',
-    userName: null,
-    profession: null
-};
-
 app.get('/api/listUsers', function (req, res) {
    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
        console.log( data );
@@ -24,9 +17,29 @@ app.get('/api/listUsers', function (req, res) {
 
 app.post('/api/signIn', function (req, res) {
     fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-        
-        console.log(req.body);
-        res.end( 'test' );
+        data = JSON.parse(data);
+        for (keys in data){
+            if(req.body.RacfID == data[keys]['racfID']){
+                signInResponse = {
+                    userID: data[keys]['id'],
+                    isValid: true,
+                    userName: data[keys]['name'],
+                    profession: data[keys]['profession'],
+                    racfID: data[keys]['racfID']
+                };
+                break;
+            }
+            else{
+                signInResponse = {
+                    userID: '-1',
+                    isValid: false,
+                    userName: null,
+                    profession: null,
+                    racfID: null
+                };
+            }
+        }
+        res.json( signInResponse );
     });
  })
 

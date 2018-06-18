@@ -2,5 +2,6 @@ export interface user{
     name : string,
     password : string,
     profession : string,
-    id: number
+    id: number,
+    racfID: string
 }

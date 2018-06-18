@@ -1,9 +1,9 @@
 <div class="LoginContainer">
-  <form #userLogin = 'ngForm' (ngSubmit)='clickme(userLogin.value)'>
+  <form #userLogin = 'ngForm' (ngSubmit)='signIn(userLogin.value)'>
     <div class="form-group">
-      <label for="Email">Email address</label>
-      <input type="email" class="form-control" name='loginemail' id="EmailID" aria-describedby="emailHelp" placeholder="Enter email" ngModel>
-      <small id="emailHelp" class="form-text text-muted">Log in via workplace ID to upload documents.</small>
+      <label for="Email">Racf ID</label>
+      <input type="text" class="form-control" name='RacfID' id="RacfID" aria-describedby="racfHelp" placeholder="Enter RacfID" ngModel>
+      <small id="racfHelp" class="form-text text-muted">Log in via workplace ID to upload documents.</small>
     </div>
     <div class="form-group">
       <label for="password">Password</label>

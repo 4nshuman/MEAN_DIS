@@ -1,18 +1,21 @@
 {
    "user1" : {
       "name" : "mahesh",
+      "racfID": "uimh02",
 	  "password" : "password1",
 	  "profession" : "teacher",
 	  "id": 1
    },
    "user2" : {
       "name" : "suresh",
+      "racfID" : "uisr08",
 	  "password" : "password2",
 	  "profession" : "librarian",
 	  "id": 2
    },
    "user3" : {
       "name" : "ramesh",
+      "racfID" : "uism89",
 	  "password" : "password3",
 	  "profession" : "clerk",
 	  "id": 3

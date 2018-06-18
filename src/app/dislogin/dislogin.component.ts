@@ -13,13 +13,9 @@ export class DISLoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  clickme(data){
-    console.log('clicked');
+  signIn(data){
     this.loginService.validateUser(data)
       .subscribe(data => console.log(data));
-    //console.log(this.user);    
-    /* console.log(this.loginService.getDemoData());
-    console.log("form data "+ data.loginremember); */
   }
 
 }
