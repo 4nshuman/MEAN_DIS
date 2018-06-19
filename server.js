@@ -2,11 +2,19 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 var cors = require('cors');
+
+var User = require('./models/user.model');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+
+var db = 'mongodb://localhost/DIS_User_DB'
+mongoose.connect(db, (err, data)=>{
+    console.log('connected to mongodb.');
+})
 
 app.get('/api/listUsers', function (req, res) {
    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
