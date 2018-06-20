@@ -25,29 +25,28 @@ app.get('/api/listUsers', function (req, res) {
 
 app.post('/api/signIn', function (req, res) {
     User.find(function (err, data) {
-        console.log(req.headers.authentication);
-        for (keys in data){
-            if(req.body['racfID'] == data[keys]['racfID'] && req.body['loginpswrd'] == data[keys]['password']){
-                signInResponse = {
-                    _id: data[keys]['_id'],
-                    userName: data[keys]['name'],
-                    racfID: data[keys]['racfID']
-                };
-                break;
-            }
-            else{
-                signInResponse = {
-                    _id: null,
-                    userName: null,
-                    racfID: null
-                };
-            }
-        }
-        signInToken = jwt.sign(signInResponse,'secret');
+        /* console.log(req.body);
+        console.log(data) */
         try{
-            res.json({token: signInToken, auth: true});
-        }
-        catch(ex){
+            signInResponse = {
+                _id: null,
+                userName: null,
+                racfID: null
+            };
+            for (keys in data){
+                if(req.body['racfID'] == data[keys]['racfID'] && req.body['loginpswrd'] == data[keys]['password']){
+                    signInResponse = {
+                        _id: data[keys]['_id'],
+                        userName: data[keys]['name'],
+                        racfID: data[keys]['racfID']
+                    };
+                    signInToken = jwt.sign(signInResponse,'secret');
+                    return res.status(200).json({token: signInToken, auth: true});
+                }
+            }
+            signInToken = jwt.sign(signInResponse,'secret');
+            return res.status(401).json({token: signInToken, auth: false});
+        }catch(err){
             console.log('in catch');
             res.json({status: 'sign in failure'});
         }

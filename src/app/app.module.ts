@@ -8,6 +8,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { DISLoginComponent } from './dislogin/dislogin.component';
 import { DISDashboardComponent } from './disdashboard/disdashboard.component';
 import { DISNotFoundComponent } from './disnot-found/disnot-found.component';
+import { Configuration } from './app.constants';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { DISNotFoundComponent } from './disnot-found/disnot-found.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [Configuration],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
