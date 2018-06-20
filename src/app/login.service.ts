@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Configuration } from "./app.constants";
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { user } from './user';
 
 @Injectable({
@@ -12,6 +12,12 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   validateUser(userData): Observable<user[]>{
-    return this.http.post<user[]>('http://localhost:8081/api/signIn',userData);
+    /* const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'authentication' : sessionStorage.getItem('token')
+    }); */
+    
+    return this.http.post<user[]>('http://localhost:8081/api/signIn',userData/* , {headers} */);
   }
+  
 }

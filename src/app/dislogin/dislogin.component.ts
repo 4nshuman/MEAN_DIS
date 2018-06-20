@@ -9,7 +9,7 @@ import { LoginService } from "../login.service";
 export class DISLoginComponent implements OnInit {
   public user={isValid: false};
   constructor(private loginService: LoginService) { }
-
+ 
   ngOnInit() {
     var userSession = sessionStorage.getItem('username');
     if(userSession){
@@ -17,21 +17,30 @@ export class DISLoginComponent implements OnInit {
     }
   }
 
-  login(data){
-    this.user = data;
-    console.log(this.user);
-    if(this.user['isValid']){
-      console.log('create a session');
-      sessionStorage.setItem('username',this.user['userName']);
+  signInValidate(APIData,formData){
+    console.log(APIData);
+    if(APIData['auth']){
+      console.log('Valid User');
+      sessionStorage.setItem('token',APIData['token']);
+      if(formData.loginremember){
+        var cookieExpiry = new Date();
+        var time = cookieExpiry.getTime();
+        var expireTime = time + 1000*60;
+        cookieExpiry.setTime(expireTime);
+        document.cookie = "username="+APIData['userName']+";expires="+cookieExpiry['toGMTString']();
+      }
+    }
+    else if(APIData['status']=='sign in failure'){
+      console.log('Sign In API failed');
     }
     else{
       console.log('invalid user');
     }
   }
 
-  signIn(data){
-    this.loginService.validateUser(data)
-      .subscribe(data => this.login(data));
+  signIn(formData){
+    this.loginService.validateUser(formData)
+      .subscribe(APIData => this.signInValidate(APIData,formData));
   }
 
 }

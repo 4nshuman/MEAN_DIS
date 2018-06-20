@@ -4,6 +4,7 @@ var fs = require("fs");
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
+var jwt = require('jsonwebtoken');
 
 var User = require('./models/user.model');
 
@@ -17,39 +18,46 @@ mongoose.connect(db, (err, data)=>{
 })
 
 app.get('/api/listUsers', function (req, res) {
-   fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-       console.log( data );
-       res.end( data );
-   });
+   User.find( (err, data) => {
+       res.json(data);
+   })
 })
 
 app.post('/api/signIn', function (req, res) {
-    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-        data = JSON.parse(data);
+    User.find(function (err, data) {
+        console.log(req.headers.authentication);
         for (keys in data){
             if(req.body['racfID'] == data[keys]['racfID'] && req.body['loginpswrd'] == data[keys]['password']){
                 signInResponse = {
-                    userID: data[keys]['id'],
-                    isValid: true,
+                    _id: data[keys]['_id'],
                     userName: data[keys]['name'],
-                    profession: data[keys]['profession'],
                     racfID: data[keys]['racfID']
                 };
                 break;
             }
             else{
                 signInResponse = {
-                    userID: '-1',
-                    isValid: false,
+                    _id: null,
                     userName: null,
-                    profession: null,
                     racfID: null
                 };
             }
         }
-        res.json( signInResponse );
+        signInToken = jwt.sign(signInResponse,'secret');
+        try{
+            res.json({token: signInToken, auth: true});
+        }
+        catch(ex){
+            console.log('in catch');
+            res.json({status: 'sign in failure'});
+        }
     });
  })
+
+ app.get('/api/dashboard', function (req, res) {
+     res.end("test");
+ })
+
 
 var server = app.listen(8081, function () {
 
