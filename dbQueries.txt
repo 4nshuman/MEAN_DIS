@@ -1,0 +1,21 @@
+db.users.insert([
+{"name":"mahesh","racfID":"uimh02","password":"password1","profession":"teacher","UID":1.0},
+{"name":"suresh","racfID":"uisr08","password":"password2","profession":"librarian","UID":2.0},
+{"name":"ramesh","racfID":"uism89","password":"password3","profession":"clerk","UID":3.0}
+])
+
+db.profiles.insert([
+{profileName:'MTS001',profileDesc:'Mortgage Documents',profileID:1},
+{profileName:'CLSC001',profileDesc:'centre local de services communautaires, local community service centre',profileID:2},
+{profileName:'WLS001',profileDesc:'Wholesale Documents',profileID:3},
+{profileName:'PWM001',profileDesc: 'Private Wealth Management Documents',profileID:4},
+{profileName:'NAO001',profileDesc:'New Account Opening',profileID:5},
+{profileName:'RTIS002',profileDesc: 'Right to information Documents',profileID:6}
+])
+
+
+db.useruploadprofiles.insert([
+{racfID: "uimh02", uploadProfileID:[{id:1, profile:'MTS001'},{id:5, profile:'NAO001'},{id:4, profile:'PWM001'}]},
+{racfID: "uisr08", uploadProfileID:[{id:2, profile:'CLSC001'},{id:5, profile:'NAO001'},{id:6, profile:'RTIS002'}]},
+{racfID: "uism89", uploadProfileID:[{id:2, profile:'CLSC001'},{id:3, profile:'WLS001'},{id:4, profile:'PWM001'}]}
+])

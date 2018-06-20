@@ -1,4 +1,5 @@
 <div class="LoginContainer">
+  <div style="float: right"><strong style="color:orangered">{{err}}</strong></div>
   <form #userLogin = 'ngForm' (ngSubmit)='signIn(userLogin.value)'>
     <div class="form-group">
       <label for="Email">Racf ID</label>

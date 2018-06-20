@@ -6,4 +6,5 @@ export class Configuration {
     public ApiUrl = 'api/';
     public ServerWithApiUrl = this.Server + this.ApiUrl;
     public appTitle = "Document Ingestion Service";
+    public err = '';
 }

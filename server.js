@@ -7,6 +7,9 @@ var cors = require('cors');
 var jwt = require('jsonwebtoken');
 
 var User = require('./models/user.model');
+var Profiles = require('./models/profiles.model');
+var userUploadProfiles = require('./models/userUploadProfiles.model');
+var checkAuth = require('./tokenAuthenticate');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -25,8 +28,6 @@ app.get('/api/listUsers', function (req, res) {
 
 app.post('/api/signIn', function (req, res) {
     User.find(function (err, data) {
-        /* console.log(req.body);
-        console.log(data) */
         try{
             signInResponse = {
                 _id: null,
@@ -53,10 +54,13 @@ app.post('/api/signIn', function (req, res) {
     });
  })
 
- app.get('/api/dashboard', function (req, res) {
-     res.end("test");
+ app.post('/api/dashboard', checkAuth, function (req, res) {
+     res.json({auth:'success'});
  })
 
+ app.post('/api/getUserUploadProfile', checkAuth, function (req, res) {
+    userUploadProfiles.findOne({racfID: req.userDecodedData.racfID}, (err, data) => res.status(200).json(data));
+ })
 
 var server = app.listen(8081, function () {
 

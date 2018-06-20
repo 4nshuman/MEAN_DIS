@@ -10,14 +10,20 @@ import { Configuration } from '../app.constants';
 })
 export class DISLoginComponent implements OnInit {
   public user={isValid: false};
+  private err = '';
   constructor(private loginService: LoginService, private conf: Configuration) { }
  
   ngOnInit() {
-    this.validateRedirect();
+    if(sessionStorage.getItem('err')){
+      this.err = sessionStorage.getItem('err');
+      sessionStorage.removeItem('err');
+    }
+    this.validateSession();
     this.conf.appTitle = 'Welcome to Document Ingestion Service';
+    console.log(this.conf.err);
   }
 
-  validateRedirect(){
+  validateSession(){
     var userSession = sessionStorage.getItem('token');
     if(userSession){
       console.log('user already logged in, redirecting');
@@ -37,7 +43,7 @@ export class DISLoginComponent implements OnInit {
         cookieExpiry.setTime(expireTime);
         document.cookie = "username="+APIData['userName']+";expires="+cookieExpiry['toGMTString']();
       }
-      this.validateRedirect();
+      this.validateSession();
     }
     else if(!APIData['auth']){
       console.log('invalid user');
@@ -50,7 +56,7 @@ export class DISLoginComponent implements OnInit {
   signIn(formData){
     this.loginService.validateUser(formData)
       .subscribe(
-        APIData => this.signInValidate(APIData,formData),
+        data => this.signInValidate(data,formData),
         err => {
           if(err.status==401){
             console.log('Unauthorized User');
