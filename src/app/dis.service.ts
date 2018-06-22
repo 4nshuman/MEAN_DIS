@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Configuration } from "./app.constants";
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
@@ -10,6 +10,8 @@ import { userUploadProfileResponse } from "./dataModelClasses/userUploadProfileR
 })
 export class DISService {
   config = new Configuration;
+  @Output() userLoaded: EventEmitter<any> = new EventEmitter();
+
   constructor(private http: HttpClient) { }
 
   validateSessionToken(): Observable<response>{
@@ -26,6 +28,10 @@ export class DISService {
       'authorization' : sessionStorage.getItem('token')
     });    
     return this.http.post<userUploadProfileResponse>(this.config.ServerWithApiUrl+'getUserUploadProfile',{} ,{headers} );
+  }
+  
+  setUserLoaded(param){
+    this.userLoaded.emit(param);
   }
   
 }

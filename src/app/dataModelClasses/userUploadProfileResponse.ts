@@ -1,7 +1,7 @@
 export interface userUploadProfileResponse{
     id : string,
     racfID: String,
-    uploadProfiles: [{
+    uploadProfileID: [{
         id: number,
         profile: String
     }]

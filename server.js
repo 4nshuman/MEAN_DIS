@@ -55,18 +55,40 @@ app.post('/api/signIn', function (req, res) {
  })
 
  app.post('/api/dashboard', checkAuth, function (req, res) {
-     res.json({auth:'success'});
+    res.json({auth:'success', userName: req.userDecodedData.userName});
  })
 
  app.post('/api/getUserUploadProfile', checkAuth, function (req, res) {
-    userUploadProfiles.findOne({racfID: req.userDecodedData.racfID}, (err, data) => res.status(200).json(data));
+    userUploadProfiles.findOne(
+        {racfID: req.userDecodedData.racfID},
+        (err, data) => res.status(200).json(data)
+    );
  })
 
-var server = app.listen(8081, function () {
+
+
+
+ //Certificate installation on server
+var key = fs.readFileSync('./encryption/localhost.key');
+var cert = fs.readFileSync( './encryption/localhost.crt' );
+//var ca = fs.readFileSync( './encryption/intermediate.crt' );
+
+var options = {
+    key: key,
+    cert: cert
+  };
+
+var https = require('https');
+https.createServer(options, app).listen(4430, () => console.log('HTTP Secure Server started'));
+
+var http = require('http');
+http.createServer(app).listen(8081, () => console.log('HTTP Server started'));
+
+/* var server = app.listen(8081, function () {
 
   var host = server.address().address
   var port = server.address().port
 
   console.log("Example app listening at http://%s:%s", host, port)
 
-})
+}) */

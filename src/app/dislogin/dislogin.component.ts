@@ -20,7 +20,6 @@ export class DISLoginComponent implements OnInit {
     }
     this.validateSession();
     this.conf.appTitle = 'Welcome to Document Ingestion Service';
-    console.log(this.conf.err);
   }
 
   validateSession(){

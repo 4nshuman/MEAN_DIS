@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Configuration } from '../app.constants';
 import { Session } from 'protractor';
 import { DISService } from "../dis.service";
@@ -9,10 +9,20 @@ import { DISService } from "../dis.service";
   styleUrls: ['./disdashboard.component.css'],
 })
 export class DISDashboardComponent implements OnInit {
+  private uploadProfileList = [];
+  private selectedBatch;
 
   constructor(private conf: Configuration, private disService: DISService) { }
 
   ngOnInit() {
+    this.disService.userLoaded.subscribe(data=> {
+      if(!data){
+        console.log('user to be logged off')
+        sessionStorage.removeItem('token');
+        sessionStorage.setItem('err','Logged Out.');
+        setTimeout(window.location.href = '/login', 3000);
+      }
+    });
     this.validateSession();
   }
 
@@ -26,6 +36,7 @@ export class DISDashboardComponent implements OnInit {
       this.disService.validateSessionToken()
        .subscribe(
          data => {
+           this.disService.setUserLoaded({'loaded':true, 'userName': data.userName});
            this.getDataFromAPI()
          },
          err => {
@@ -41,9 +52,16 @@ export class DISDashboardComponent implements OnInit {
   getDataFromAPI(){
     this.disService.getUserUploadProfiles()
       .subscribe(
-        data => console.log(data),
+        data => {
+          this.populateUploadProfileList(data.uploadProfileID);
+        },
         err => console.log(err)
       );
   }
 
+  populateUploadProfileList(profiledata){
+    profiledata.forEach(element => {
+      this.uploadProfileList.push(element['profile']);
+    });
+  }
 }

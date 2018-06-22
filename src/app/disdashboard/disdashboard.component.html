@@ -1,3 +1,15 @@
-<p>
-  Welcome {{userName}}
-</p>
+<div class='row'>
+  <div class = 'col-md-3' style = 'margin-left: 5px'>
+    <div class="list-group list-group-flush">
+      <a [class.active]="batch === selectedBatch" class = "list-group-item"
+        *ngFor='let batch of uploadProfileList' (click)='selectedBatch = batch'>
+        <span class="badge">{{ batchCount }}</span>{{batch}}
+      </a>
+    </div>
+  </div>
+  <div class = 'col-md-3'>
+    {{selectedBatch}}
+  </div>
+  <div class = 'col-md-3'>
+  </div>
+</div>
