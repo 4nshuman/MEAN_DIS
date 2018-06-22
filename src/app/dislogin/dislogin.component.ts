@@ -11,6 +11,8 @@ import { Configuration } from '../app.constants';
 export class DISLoginComponent implements OnInit {
   public user={isValid: false};
   private err = '';
+  private loadStart =false;
+
   constructor(private loginService: LoginService, private conf: Configuration) { }
  
   ngOnInit() {
@@ -50,15 +52,18 @@ export class DISLoginComponent implements OnInit {
     else if(APIData['status']=='sign in failure'){
       console.log('Sign In API failed');
     }
+    this.loadStart=false;
   }
 
   signIn(formData){
+    this.loadStart=true;
     this.loginService.validateUser(formData)
       .subscribe(
         data => this.signInValidate(data,formData),
         err => {
           if(err.status==401){
-            console.log('Unauthorized User');
+            this.err = 'Invalid User ID or Password.';
+            this.loadStart=false;
           }
         }
       );
