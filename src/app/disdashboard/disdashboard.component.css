@@ -1,0 +1,40 @@
+.custom-box{
+    overflow: hidden;
+    cursor: pointer;
+}
+
+section:hover #batch-box{
+    margin-right: -125px;
+    transition: all 0.5s;
+}
+
+section:hover #button-box{
+    margin-left: 00px;
+    transition: all 0.5s;
+}
+
+.batch-box{
+    margin-right: 160px;
+    float: right;
+    transition: all 0.5s;
+    height: 100%;
+}
+
+.button-box{
+    margin-left: -1000px;
+    transition: all 0.5s;
+    height: 100%;
+}
+
+.btn1{
+    width: 50%;
+    float: left;
+    cursor: pointer;
+    height: 100%;
+}
+
+.btn2{
+    margin-left: 250px;
+    cursor: pointer;
+    height: 100%;
+}

@@ -16,7 +16,7 @@ export class LoginService {
       'Content-Type': 'application/json',
       'authentication' : sessionStorage.getItem('token')
     }); */
-    
+    console.log('test');
     return this.http.post<response>(this.config.ServerWithApiUrl+'signIn',userData/* , {headers} */);
   }
   

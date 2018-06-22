@@ -64,4 +64,8 @@ export class DISDashboardComponent implements OnInit {
       this.uploadProfileList.push(element['profile']);
     });
   }
+
+  test(){
+    alert('test');
+  }
 }

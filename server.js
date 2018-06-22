@@ -35,6 +35,8 @@ app.post('/api/signIn', function (req, res) {
                 racfID: null
             };
             for (keys in data){
+                console.log(req.body['racfID']);
+                console.log(data[keys]['racfID']);
                 if(req.body['racfID'] == data[keys]['racfID'] && req.body['loginpswrd'] == data[keys]['password']){
                     signInResponse = {
                         _id: data[keys]['_id'],
