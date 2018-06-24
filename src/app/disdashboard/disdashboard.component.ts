@@ -68,4 +68,5 @@ export class DISDashboardComponent implements OnInit {
   test(){
     alert('test');
   }
+  
 }

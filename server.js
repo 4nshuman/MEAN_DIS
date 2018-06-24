@@ -21,12 +21,15 @@ mongoose.connect(db, (err, data)=>{
 })
 
 app.get('/api/listUsers', function (req, res) {
+    console.log(req.connection.remoteAddress);
    User.find( (err, data) => {
        res.json(data);
    })
 })
 
 app.post('/api/signIn', function (req, res) {
+    console.log(req.connection.remoteAddress);
+    console.log(req.body['racfID']);
     User.find(function (err, data) {
         try{
             signInResponse = {
@@ -35,8 +38,6 @@ app.post('/api/signIn', function (req, res) {
                 racfID: null
             };
             for (keys in data){
-                console.log(req.body['racfID']);
-                console.log(data[keys]['racfID']);
                 if(req.body['racfID'] == data[keys]['racfID'] && req.body['loginpswrd'] == data[keys]['password']){
                     signInResponse = {
                         _id: data[keys]['_id'],
@@ -48,7 +49,7 @@ app.post('/api/signIn', function (req, res) {
                 }
             }
             signInToken = jwt.sign(signInResponse,'secret');
-            return res.status(401).json({token: signInToken, auth: false});
+            return res.status(401).json({token: "null", auth: false});
         }catch(err){
             console.log('in catch');
             res.json({status: 'sign in failure'});
